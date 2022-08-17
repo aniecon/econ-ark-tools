@@ -16,8 +16,13 @@ echo Econ-ARK > /.disk_label.contentDetails
 
 # Tools that allow machine to recognize many devices without open drivers
 # e.g., Broadcom modems are common and require firmware-b43-installer
-sudo apt-get -y install b43-fwcutter	       
-sudo apt-get -y install firmware-b43-installer
+sudo pacman -S install b43-fwcutter	       
+# sudo apt-get -S install firmware-b43-installer
+
+sudo pacman -S base-devel git
+git clone https://aur.archlinux.org/b43-firmware.git
+cd b43-firmware
+makepkg -sic
 
 cp /var/local/sys_root_dir/etc/default/grub /etc/default/grub
 sudo update-grub
