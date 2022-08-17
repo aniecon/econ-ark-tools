@@ -31,7 +31,8 @@ mypass="kra-noce"       # both have the same password
 sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
 
 # Get some basic immediately useful tools 
-sudo apt-get -y install bash-completion curl apt-utils  man-db
+# sudo apt-get -y install bash-completion curl apt-utils  man-db
+sudo pacman -Syu bash-completion curl man-db
 
 # Create with appropriate groups
 /var/local/config/add-users.sh |& tee /var/local/status/add-users.log
@@ -63,7 +64,7 @@ fi
 
 # If running in VirtualBox, install Guest Additions and add vboxsf to econ-ark groups
 if [[ "$(which lshw)" ]] && vbox="$(lshw -c system 2>/dev/null | grep VirtualBox)"  && [[ "$vbox" != "" ]] ; then
-    sudo apt -y install virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11 xserver-xorg-video-dummy
+    sudo pacman -Syu install virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11 xserver-xorg-video-dummy
 fi
 
 # Add autostart requirements
@@ -115,7 +116,7 @@ sudo         cp  /var/local/sys_root_dir/etc/lightdm/lightdm-gtk-greeter.conf   
 
 
 # Allow interactive commands to be preseeded
-sudo apt -y install expect
+sudo pacman -Syu expect
 
 # Scraping server allows outside user to watch display X:0
 # "scraping" means that you're not allowing vnc client to spawn new x sessions
@@ -124,7 +125,7 @@ sudo apt -y install expect
 
 # Installation of package needs to be done here
 # (permissions require password in subscripts)
-sudo apt -y install tigervnc-scraping-server
+sudo pacman -Syu tigervnc-scraping-server
 
 # Needs to be installed for a user but with sudo permissions
 sudo -u $vncuser /var/local/installers/install-tigervnc-scraping-server.sh $vncuser
@@ -142,7 +143,7 @@ sudo rm -f /var/crash/grub-pc.0.crash
 sudo /var/local/installers/install-and-configure-xrdp.sh $vncuser |& tee -a /var/local/status/install-and-configure-xrdp.log
 
 # Tools to detect various kinds of hardware
-sudo apt -y install xserver-xorg-input-libinput xserver-xorg-input-evdev xserver-xorg-input-mouse xserver-xorg-input-synaptics
+sudo pacman -Syu install xserver-xorg-input-libinput xserver-xorg-input-evdev xserver-xorg-input-mouse xserver-xorg-input-synaptics
 
 sudo /var/local/installers/install-ssh.sh
 sudo /var/local/config/config-ssh-user.sh $vncuser
